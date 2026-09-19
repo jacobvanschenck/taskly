@@ -1,6 +1,10 @@
 ---
+import { env } from "cloudflare:workers";
 import astroLogo from "../assets/astro.svg";
 import background from "../assets/background.svg";
+
+const myKV = env.MY_KV;
+const value = await myKV.get("wife");
 ---
 
 <div id="container">
@@ -11,7 +15,7 @@ import background from "../assets/background.svg";
 				><img src={astroLogo.src} width="115" height="48" alt="Astro Homepage" /></a
 			>
 			<h1>
-        I love my wife!
+        I love {value}!
 			</h1>
 			<section id="links">
 				<a class="button" href="https://docs.astro.build">Read our docs</a>
