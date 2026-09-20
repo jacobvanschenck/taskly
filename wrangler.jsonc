@@ -1,23 +1,24 @@
 {
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"compatibility_date": "2026-09-16",
-	"compatibility_flags": [
-		"global_fetch_strictly_public"
-	],
-	"name": "taskly",
-	"main": "@astrojs/cloudflare/entrypoints/server",
-	"assets": {
-		"directory": "./dist",
-		"binding": "ASSETS"
-	},
-	"observability": {
-		"enabled": true
-	},
-	"kv_namespaces": [
-		{
-			"binding": "MY_KV",
-			"id": "6f2dd663e1f74e779cf96419cd49e38a",
-			"remote": true
-		}
-	]
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-09-16",
+  "compatibility_flags": [
+    "global_fetch_strictly_public"
+  ],
+  "name": "taskly",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "taskly_db",
+      "database_name": "taskly-db",
+      "database_id": "c54628df-e6ca-4d61-9ad9-3b59cfa89cb3",
+      "remote": true
+    }
+  ]
 }

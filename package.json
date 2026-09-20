@@ -12,17 +12,21 @@
 		"astro": "astro",
 		"generate-types": "wrangler types",
 		"deploy": "astro build && wrangler deploy",
-		"cf-typegen": "wrangler types"
+		"cf-typegen": "wrangler types",
+		"db:generate": "drizzle-kit generate",
+		"db:push": "drizzle-kit push"
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^14.3.2",
-		"astro": "^7.3.3"
+		"astro": "^7.3.3",
+		"drizzle-orm": "1.0.0-rc.4"
 	},
 	"allowScripts": {
 		"esbuild": true
 	},
 	"devDependencies": {
 		"@types/node": "^26.6.1",
+		"drizzle-kit": "1.0.0-rc.4",
 		"wrangler": "^4.134.0"
 	}
 }
