@@ -18,8 +18,10 @@
 	},
 	"dependencies": {
 		"@astrojs/cloudflare": "^14.3.2",
+		"@tailwindcss/vite": "^4.3.3",
 		"astro": "^7.3.3",
-		"drizzle-orm": "1.0.0-rc.4"
+		"drizzle-orm": "1.0.0-rc.4",
+		"tailwindcss": "^4.3.3"
 	},
 	"allowScripts": {
 		"esbuild": true
