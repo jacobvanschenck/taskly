@@ -29,6 +29,8 @@
 	"devDependencies": {
 		"@types/node": "^26.6.1",
 		"drizzle-kit": "1.0.0-rc.4",
+		"prettier": "^3.9.8",
+		"prettier-plugin-astro": "^1.0.1",
 		"wrangler": "^4.134.0"
 	}
 }
