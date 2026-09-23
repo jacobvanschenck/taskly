@@ -1,19 +1,6 @@
----
-import { env } from "cloudflare:workers";
-import { drizzle } from "drizzle-orm/d1";
-import { tasksTable } from "../db/schema";
-
-const db = drizzle(env.taskly_db);
-const rows = await db.select().from(tasksTable).all();
----
-
 <section class="text-on-surface dark:text-on-surface-dark">
   <h1 class="text-on-surface-strong dark:text-on-surface-dark-strong text-2xl font-bold">
     I love Lindy!
   </h1>
-  <section id="links">
-    {rows.map((row) => (
-      <li>{row.name}</li>
-    ))}
-  </section>
+  <section hx-get="/api/tasks" hx-swap="innerHtml" hx-trigger="load"></section>
 </section>

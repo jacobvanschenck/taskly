@@ -1,0 +1,16 @@
+---
+export const partial = true;
+
+import { env } from "cloudflare:workers";
+import { drizzle } from "drizzle-orm/d1";
+import { tasksTable } from "../../db/schema";
+
+const db = drizzle(env.taskly_db);
+const rows = await db.select().from(tasksTable).all();
+---
+
+<ul>
+  {rows.map((row) => (
+    <li>{row.name}</li>
+  ))}
+</ul>
