@@ -1,0 +1,11 @@
+---
+import { tasksTable } from "../db/schema";
+
+interface Props {
+  task: typeof tasksTable.$inferSelect;
+}
+
+const { task } = Astro.props;
+---
+
+<li>{task.name}</li>

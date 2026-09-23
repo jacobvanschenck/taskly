@@ -6,7 +6,7 @@ import {
 	text,
 } from "drizzle-orm/sqlite-core";
 
-export const users = sqliteTable("users_table", {
+export const usersTable = sqliteTable("users_table", {
 	id: text("id")
 		.primaryKey()
 		.$defaultFn(() => crypto.randomUUID()),
@@ -20,7 +20,7 @@ export const users = sqliteTable("users_table", {
 		.$onUpdateFn(() => new Date()),
 });
 
-export const teams = sqliteTable("teams_table", {
+export const teamsTable = sqliteTable("teams_table", {
 	id: text("id")
 		.primaryKey()
 		.$defaultFn(() => crypto.randomUUID()),
@@ -34,11 +34,11 @@ export const teams = sqliteTable("teams_table", {
 		.$onUpdateFn(() => new Date()),
 });
 
-export const teamMembers = sqliteTable(
+export const teamMembersTable = sqliteTable(
 	"team_members_table",
 	{
-		teamId: text("team_id").references(() => teams.id),
-		userId: text("user_id").references(() => users.id),
+		teamId: text("team_id").references(() => teamsTable.id),
+		userId: text("user_id").references(() => usersTable.id),
 		role: text("role", { enum: ["admin", "member"] }),
 		createdAt: integer("created_at", { mode: "timestamp_ms" })
 			.notNull()
@@ -69,7 +69,7 @@ export const tasksTable = sqliteTable(
 		name: text("name").notNull(),
 		description: text("description"),
 		parentId: text("parent_id"),
-		assignedTo: text("assigned_to").references(() => users.id),
+		assignedTo: text("assigned_to").references(() => usersTable.id),
 		dueAt: integer("due_at", { mode: "timestamp_ms" }),
 		createdAt: integer("created_at", { mode: "timestamp_ms" })
 			.notNull()
