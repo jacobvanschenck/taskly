@@ -2,14 +2,93 @@
 export const partial = true;
 
 import { env } from "cloudflare:workers";
+import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
 import { tasksTable } from "../../db/schema";
 import TaskRow from "../../components/TaskRow.astro";
+import InProgressIcon from "../../assets/in-progress.svg";
+import NotStartedIcon from "../../assets/not-started.svg";
+import CompletedIcon from "../../assets/completed.svg";
 
 const db = drizzle(env.taskly_db);
-const rows = await db.select().from(tasksTable).all();
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const name = formData.get("name")?.toString();
+  const description = formData.get("description")?.toString();
+
+  if (!name) {
+    return new Response(
+      JSON.stringify({
+        error: "Bad Request",
+        message: 'The "name" field is required.',
+      }),
+      {
+        status: 400,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
+    );
+  }
+
+  await db.insert(tasksTable).values({ name, description });
+}
+
+const rows = await db
+  .select()
+  .from(tasksTable)
+  .orderBy(
+    sql`case ${tasksTable.priority}
+      when 'urgent' then 1
+      when 'high' then 2
+      when 'medium' then 3
+      when 'low' then 4
+      else 5
+    end`,
+    tasksTable.createdAt,
+  )
+  .all();
 ---
 
-{rows.map((task) => (
-  <TaskRow task={task} />
-))}
+<div id="task-tables" class="flex flex-col gap-1">
+  <div class="flex gap-2 items-center w-full bg-surface-alt dark:bg-surface-dark-alt p-2 rounded-radius">
+    <InProgressIcon />
+    <h2>In progress</h2>
+  </div>
+  <table class="w-full text-left">
+    <tbody>
+      {rows
+        .filter((task) => task.status === "in_progress")
+        .map((task) => (
+          <TaskRow task={task} />
+        ))}
+    </tbody>
+  </table>
+  <table class="w-full text-left">
+    <div class="flex gap-2 items-center w-full bg-surface-alt dark:bg-surface-dark-alt p-2 rounded-radius">
+      <NotStartedIcon />
+      <h2>Not started</h2>
+    </div>
+    <tbody>
+      {rows
+        .filter((task) => task.status === "not_started")
+        .map((task) => (
+          <TaskRow task={task} />
+        ))}
+    </tbody>
+  </table>
+  <table class="w-full text-left">
+    <div class="flex gap-2 items-center w-full bg-surface-alt dark:bg-surface-dark-alt p-2 rounded-radius">
+      <CompletedIcon />
+      <h2>Completed</h2>
+    </div>
+    <tbody>
+      {rows
+        .filter((task) => task.status === "completed")
+        .map((task) => (
+          <TaskRow task={task} />
+        ))}
+    </tbody>
+  </table>
+</div>

@@ -66,6 +66,11 @@ export const tasksTable = sqliteTable(
 		})
 			.notNull()
 			.default("not_started"),
+		priority: text("priority", {
+			enum: ["low", "medium", "high", "urgent"],
+		})
+			.notNull()
+			.default("low"),
 		name: text("name").notNull(),
 		description: text("description"),
 		parentId: text("parent_id"),

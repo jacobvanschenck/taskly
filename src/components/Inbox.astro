@@ -1,14 +1,43 @@
 ---
+import Dialog from "./Dialog.astro";
 ---
 
 <section
   hx-get="/api/tasks"
-  hx-target="tbody"
+  hx-target="#task-tables"
   hx-trigger="load"
-  hx-swap="innerHtml"
   class="text-on-surface dark:text-on-surface-dark"
 >
-  <table class="w-full text-left">
-    <tbody></tbody>
-  </table>
+  <div id="task-tables" />
+  <Dialog buttonTitle="Add task" dialogTitle="Add task">
+    <form
+      hx-post="/api/tasks"
+      hx-target="#task-tables"
+      x-on:submit="modalIsOpen = false"
+      slot="dialog-main-content"
+      class="min-w-md p-2"
+    >
+      <input
+        id="textInputDefault"
+        type="text"
+        class="w-full focus:outline-none rounded-radius bg-surface-alt px-2 py-2 text-lg disabled:cursor-not-allowed disabled:opacity-75 dark:bg-surface-dark-alt/50"
+        name="name"
+        placeholder="Task name"
+        autocomplete="name"
+      />
+      <input
+        id="textInputDefault"
+        type="text"
+        class="w-full focus:outline-none rounded-radius bg-surface-alt px-2 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-75 dark:bg-surface-dark-alt/50"
+        name="description"
+        placeholder="Add a description..."
+        autocomplete="description"
+      />
+      <div class="flex justify-end p-2">
+        <button class="whitespace-nowrap rounded-radius bg-primary border border-primary px-4 py-2 text-sm font-medium tracking-wide text-on-primary transition hover:opacity-75 text-center focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:opacity-100 active:outline-offset-0 disabled:opacity-75 disabled:cursor-not-allowed dark:bg-primary-dark dark:border-primary-dark dark:text-on-primary-dark dark:focus-visible:outline-primary-dark">
+          Create task
+        </button>
+      </div>
+    </form>
+  </Dialog>
 </section>
