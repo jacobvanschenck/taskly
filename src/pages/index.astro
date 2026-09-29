@@ -1,13 +1,11 @@
 ---
-import "../styles/global.css";
-
 import Sidebar from "../components/Sidebar.astro";
 import Inbox from "../components/Inbox.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout>
-  <Sidebar>
+  <Sidebar slot="layout-slot">
     <Inbox slot="main-content" />
   </Sidebar>
 </Layout>

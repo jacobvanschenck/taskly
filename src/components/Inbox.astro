@@ -1,13 +1,19 @@
 ---
 import Dialog from "./Dialog.astro";
+import Loading from "../assets/loading.svg";
 ---
 
 <section
   hx-get="/api/tasks"
   hx-target="#task-tables"
   hx-trigger="load"
+  hx-indicator="#spinner"
   class="text-on-surface dark:text-on-surface-dark"
 >
+  <Loading
+    id="spinner"
+    class="htmx-indicator size-6 stroke-on-surface dark:stroke-on-surface-dark"
+  />
   <div id="task-tables" />
   <Dialog buttonTitle="Add task" dialogTitle="Add task">
     <form

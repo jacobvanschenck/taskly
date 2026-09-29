@@ -17,8 +17,7 @@ const { task } = Astro.props;
 ---
 
 <tr
-  hx-get={`/api/tasks/${task.id}`}
-  hx-push-url="true"
+  @click={`window.location.href = '/tasks/${task.id}'`}
   class="cursor-pointer hover:bg-primary/5 dark:hover:bg-primary-dark/5"
 >
   <td class="p-2 rounded-l-radius">

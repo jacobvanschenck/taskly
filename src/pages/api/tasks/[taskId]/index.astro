@@ -5,6 +5,7 @@ import { env } from "cloudflare:workers";
 import { drizzle } from "drizzle-orm/d1";
 import { tasksTable } from "../../../../db/schema";
 import { eq } from "drizzle-orm";
+import TaskDetails from "../../../../components/TaskDetails.astro";
 
 const db = drizzle(env.taskly_db);
 
@@ -45,6 +46,11 @@ if (!row) {
     },
   );
 }
+
+if (Astro.request.method === "DELETE") {
+  // await db.delete(tasksTable).where(eq(tasksTable.id, taskId));
+  return new Response(undefined, { status: 200 });
+}
 ---
 
-<p>{row.name}</p>
+<TaskDetails task={row} />

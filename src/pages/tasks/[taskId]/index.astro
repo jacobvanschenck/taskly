@@ -1,5 +1,23 @@
 ---
+import Layout from "../../../layouts/Layout.astro";
+import Sidebar from "../../../components/Sidebar.astro";
+import Loading from "../../../assets/loading.svg";
+
 const { taskId } = Astro.params;
 ---
 
-<section hx-get={`/api/tasts/${taskId}`} hx-swap="innerHtml"></section>
+<Layout>
+  <Sidebar slot="layout-slot">
+    <section
+      hx-get={`/api/tasks/${taskId}`}
+      hx-trigger="load"
+      hx-swap="innerHtml"
+      slot="main-content"
+    >
+      <Loading
+        id="spinner"
+        class="htmx-indicator size-6 stroke-on-surface dark:stroke-on-surface-dark"
+      />
+    </section>
+  </Sidebar>
+</Layout>
