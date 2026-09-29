@@ -17,7 +17,7 @@ const { task } = Astro.props;
 ---
 
 <tr
-  hx-get={`/tasks/${task.id}`}
+  hx-get={`/api/tasks/${task.id}`}
   hx-push-url="true"
   class="cursor-pointer hover:bg-primary/5 dark:hover:bg-primary-dark/5"
 >

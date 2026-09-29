@@ -4,11 +4,11 @@ export const partial = true;
 import { env } from "cloudflare:workers";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/d1";
-import { tasksTable } from "../../db/schema";
-import TaskRow from "../../components/TaskRow.astro";
-import InProgressIcon from "../../assets/in-progress.svg";
-import NotStartedIcon from "../../assets/not-started.svg";
-import CompletedIcon from "../../assets/completed.svg";
+import { tasksTable } from "../../../db/schema";
+import TaskRow from "../../../components/TaskRow.astro";
+import InProgressIcon from "../../../assets/in-progress.svg";
+import NotStartedIcon from "../../../assets/not-started.svg";
+import CompletedIcon from "../../../assets/completed.svg";
 
 const db = drizzle(env.taskly_db);
 

@@ -1,0 +1,50 @@
+---
+export const partial = true;
+
+import { env } from "cloudflare:workers";
+import { drizzle } from "drizzle-orm/d1";
+import { tasksTable } from "../../../../db/schema";
+import { eq } from "drizzle-orm";
+
+const db = drizzle(env.taskly_db);
+
+const { taskId } = Astro.params;
+
+if (!taskId) {
+  return new Response(
+    JSON.stringify({
+      error: "Bad request",
+      message: "Task id cannot be undefined",
+    }),
+    {
+      status: 400,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+}
+
+const row = await db
+  .select()
+  .from(tasksTable)
+  .where(eq(tasksTable.id, taskId))
+  .get();
+
+if (!row) {
+  return new Response(
+    JSON.stringify({
+      error: "Not found",
+      message: `Couldn't find task with id: ${taskId}`,
+    }),
+    {
+      status: 400,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    },
+  );
+}
+---
+
+<p>{row.name}</p>
